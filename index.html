@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dynamic Slot Machine</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="main-container">
-        <!-- Slot Machine Container -->
-        <div class="container">
-            <h1>🔥 Ted Bernhardtz 🔥</h1>
-            <div class="slot-container">
-                <div id="slot_box">
-                    <ul id="list"></ul>
-                </div>
-            </div>
-            <div class="controls">
-                <button id="btn_start">Start</button>
-                <button id="btn_stop" disabled>Stop</button>
-            </div>
-            <div id="winner_section" class="hidden">
-                <h2>🎉 Winner! 🎉</h2>
-                <img id="winner_image" alt="Winning Slot">
-                <p id="winner_text"></p>
-            </div>
+      <!-- Slot Machine Container -->
+      <div class="container">
+        <h1><strong>TED BERNHARDTZ LOTTERY</strong></h1>
+        <div class="slot-container">
+          <div id="slot_box">
+            <ul id="list"></ul>
+          </div>
         </div>
+        <div class="controls">
+          <button id="btn_start">Start</button>
+          <button id="btn_stop" disabled>Stop</button>
+        </div>
+        <div id="winner_section" class="hidden">
+          <h2>🎉 Winner! 🎉</h2>
+          <img id="winner_image" alt="Winning Slot" />
+          <p id="winner_text"></p>
+        </div>
+      </div>
 
-<!-- Winner List Section (Initially hidden) -->
-<div class="secound_container hidden" id="winner_section_container">
-    <div class="winner-section">
-        <h2>🏆 Winner List 🏆</h2>
-        <ul class='winning list'>
+      <!-- Winner List Section (Initially hidden) -->
+      <div class="secound_container hidden" id="winner_section_container">
+        <div class="winner-section">
+          <h2>🏆 Winner List 🏆</h2>
+          <ul class="winning list">
             <!-- Winner entries will be dynamically added here -->
-        </ul>
-    </div>
-</div>
-
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Button to reveal winner list -->
     <div class="toggle-container">
-        <button id="toggle_winner_list" class="cool-btn">Show Winner List</button>
+      <button id="toggle_winner_list" class="cool-btn">Show Winner List</button>
     </div>
-    <div class="dots">
-        
-    </div>
+    <div class="dots"></div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
