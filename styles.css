@@ -69,6 +69,10 @@ body::before {
   height: auto; /* Allow dynamic height */
 }
 
+.container h1 {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 @keyframes pop-in {
   from {
     transform: scale(0.8);
@@ -167,6 +171,7 @@ button:hover {
 #winner_text {
   font-size: 2.5rem;
   font-weight: bold;
+  /* text-align: left; */
 }
 
 .winner-section {
@@ -351,21 +356,35 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: flex-start; /* Ensure items are aligned to the left */
-  gap: 30px; /* Increase spacing between image and text */
+  gap: 20px; /* Increase spacing between image and text */
 }
 
 .drag-img {
-  width: 90px; /* Larger image size */
-  height: 90px; /* Larger image size */
+  width: 100px; /* Larger image size */
+  height: 100px; /* Larger image size */
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #007bff;
 }
 
 .drag-details span {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-family: "Georgia", serif;
-  font-weight: 500;
+  font-weight: 300;
   color: #ffffff;
-  text-align: justify; /* Text is justified */
+  text-align: center; /* Text is justified */
+}
+
+.remove-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-btn:hover {
+  background-color: #ff1a1a;
 }

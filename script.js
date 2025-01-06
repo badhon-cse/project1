@@ -793,8 +793,8 @@ let currentIndex = 0;
 let isSpinning = false;
 
 // Speed control variables
-const spinSpeed = 30; // Speed of the spinning animation (higher is faster)
-const decelerationFactor = 0.95; // Factor by which the speed slows down when stopping
+const spinSpeed = 1000; // Speed of the spinning animation (higher is faster)
+const decelerationFactor = 0.9; // Factor by which the speed slows down when stopping
 
 // Populate slot with images dynamically
 const populateSlot = () => {
@@ -865,7 +865,7 @@ const stopSpin = () => {
         winnerImage.src = winnerImageURL;
         console.log(winnerIndex);
         console.log(selectedEmployees);
-        winnerText.textContent = `Name: ${selectedEmployees[winnerIndex]["Name"]}\nID: ${selectedEmployees[winnerIndex]["Emp Id"]}`;
+        winnerText.innerHTML = `Name: ${selectedEmployees[winnerIndex]["Name"]}<br>ID: ${selectedEmployees[winnerIndex]["Emp Id"]}`;
         winnerSection.classList.remove("hidden");
         launchConfetti();
         startButton.disabled = false;
@@ -935,27 +935,50 @@ function renderWinnerList() {
 
   // Loop through the winner list and create the list items
   winnerList.forEach((winnerId, index) => {
-    console.log("winerID new: ", winnerId);
     const listItem = document.createElement("li");
     listItem.className = "winner";
-    console.log("selectedEmp: ", selectedEmployees);
 
     listItem.innerHTML = `
-            <div class='drag-details'>
-                <img src='${data[winnerId]["Photo"]}' alt='Winner Image' class='drag-img'>
-                <span>${data[winnerId]["Name"]} <br> (ID: ${data[winnerId]["Emp Id"]})</span>
-            </div>
-        `;
+      <div class='drag-details'>
+          <span><img src='${data[winnerId]["Photo"]}' alt='Winner Image' class='drag-img'>
+          ${data[winnerId]["Name"]} <br> (ID: ${data[winnerId]["Emp Id"]})</span>
+          <button class="remove-btn" data-id="${winnerId}">Remove</button>
+      </div>
+      
+    `;
 
     winnerListContainer.appendChild(listItem);
   });
 
-  // Show the winner section if there are winners
+  // Add event listeners for each remove button
+  const removeButtons = winnerListContainer.querySelectorAll(".remove-btn");
+  removeButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const winnerIdToRemove = e.target.dataset.id;
+      removeWinner(winnerIdToRemove);
+    });
+  });
+
+  // Show or hide the winner section based on list length
   if (winnerList.length > 0) {
     winnerSection.classList.remove("hidden");
   } else {
     winnerSection.classList.add("hidden");
   }
+}
+
+function removeWinner(winnerId) {
+  // Get the current winner list from localStorage
+  let winnerList = JSON.parse(localStorage.getItem("winners")) || [];
+
+  // Remove the selected winner ID from the list
+  winnerList = winnerList.filter((id) => id !== winnerId);
+
+  // Update localStorage with the modified list
+  localStorage.setItem("winners", JSON.stringify(winnerList));
+
+  // Re-render the winner list
+  renderWinnerList();
 }
 
 // Example Usage: Call this function when the page loads or after updating the winner list
