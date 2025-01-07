@@ -22,10 +22,18 @@
         </div>
         <div id="winner_section" class="hidden">
           <h2>🎉 Winner! 🎉</h2>
+          <button id="close_popup" class="close-btn">×</button>
           <img id="winner_image" alt="Winning Slot" />
           <p id="winner_text"></p>
         </div>
       </div>
+
+      <audio id="music" src="audio.mp3" preload="auto" loop></audio>
+      <audio
+        id="winnerSound"
+        src="CROWD CHEER SOUND EFFECT.mp3"
+        preload="auto"
+      ></audio>
 
       <!-- Winner List Section (Initially hidden) -->
       <div class="secound_container hidden" id="winner_section_container">

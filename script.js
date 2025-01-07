@@ -808,20 +808,23 @@ const populateSlot = () => {
 };
 let selectedEmployees;
 let selectedList;
+const music = document.getElementById("music");
 // Start spinning with smooth infinite animation
 const startSpin = () => {
   if (isSpinning) return;
   isSpinning = true;
+  music.play();
+  // Hide the winner pop-up when starting a new spin
+  winnerSection.style.display = "none";
+
   winnerSection.classList.add("hidden");
   startButton.disabled = true;
   stopButton.disabled = false;
   let offset = 0;
-  const slotHeight = 350; // Adjust to match the height of each image item
+  const slotHeight = 600; // Adjust to match the height of each image item
 
   selectedList = selectAndRemoveRandomItems(SELECTRANDOM);
-  console.log("selectedList: ", selectedList);
   selectedEmployees = selectedList.map((key) => data[key]);
-  console.log("selectedEmployees: ", selectedEmployees);
 
   populateImages(selectedEmployees);
   populateSlot();
@@ -832,17 +835,23 @@ const startSpin = () => {
   }, 16); // Smooth 60 FPS animation
 };
 
-// Stop spinning and add slowing effect
+function playWinnerSound() {
+  const winnerSound = document.getElementById("winnerSound");
+  winnerSound.play(); // Play the sound
+}
+
 const stopSpin = () => {
   if (!isSpinning) return;
   isSpinning = false;
   clearInterval(spinningInterval);
 
+  music.pause();
+
   let offset =
     parseFloat(
       slotBox.style.transform.replace("translateY(-", "").replace("px)", "")
     ) || 0;
-  const slotHeight = 300;
+  const slotHeight = 600;
   let velocity = spinSpeed * 3; // Initial velocity for slowing down
 
   const slowDown = () => {
@@ -863,22 +872,23 @@ const stopSpin = () => {
       setTimeout(() => {
         const winnerImageURL = images[winnerIndex];
         winnerImage.src = winnerImageURL;
-        console.log(winnerIndex);
-        console.log(selectedEmployees);
         winnerText.innerHTML = `Name: ${selectedEmployees[winnerIndex]["Name"]}<br>ID: ${selectedEmployees[winnerIndex]["Emp Id"]}`;
-        winnerSection.classList.remove("hidden");
+
+        // Show winner image and details in the center
+        winnerSection.style.display = "block"; // Display the winner pop-up
+
+        // Play the winner sound
+        playWinnerSound();
+
         launchConfetti();
         startButton.disabled = false;
         stopButton.disabled = true;
 
         // Store winner in localStorage
         const winnerID = selectedList[winnerIndex]; // Assuming each employee object contains an `id`
-        console.log("winnerId: ", winnerID);
         const storedWinners = JSON.parse(localStorage.getItem("winners")) || [];
         storedWinners.push(winnerID); // Add new winner ID to the list
         localStorage.setItem("winners", JSON.stringify(storedWinners)); // Save updated list
-
-        console.log("Winner stored in localStorage:", storedWinners);
       }, 500);
     }
   };
@@ -900,6 +910,13 @@ startButton.addEventListener("click", startSpin);
 stopButton.addEventListener("click", stopSpin);
 
 // Initial Setup
+// Ensure winnerSection is correctly identified
+
+// Event listener for close button
+document.getElementById("close_popup").addEventListener("click", function () {
+  winnerSection.style.display = "none";
+  winnerSection.classList.add("hidden"); // Add the 'hidden' class to hide the winner pop-up
+});
 
 document
   .getElementById("toggle_winner_list")
